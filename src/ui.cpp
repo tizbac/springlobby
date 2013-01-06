@@ -22,14 +22,14 @@
 
 #include "introguide.h"
 #include "ui.h"
-#include "tasserver.h"
+#include <lsl/networking/tasserver.h>
 #include "settings.h"
 #include "server.h"
 #include "spring.h"
 #include "channel/channel.h"
 #include "connectwindow.h"
 #include "mainwindow.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "utils/debug.h"
 #include "utils/conversion.h"
 #include "utils/uievents.h"
@@ -40,7 +40,7 @@
 #include "hosting/battleroomtab.h"
 #include "hosting/mainjoinbattletab.h"
 #include "hosting/mainsingleplayertab.h"
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include "mainchattab.h"
 #include "crashreport.h"
 #include "maindownloadtab.h"

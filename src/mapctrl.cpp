@@ -9,16 +9,18 @@
 #include <stdexcept>
 #include <wx/log.h>
 
+#include <lsl/battle/ibattle.h>
+#include <lslunitsync/unitsync.h>
+#include <lslunitsync/optionswrapper.h>
+#include <lslutils/misc.h>
+
 #include "utils/debug.h"
 #include "utils/conversion.h"
-#include <lslutils/misc.h>
 #include "uiutils.h"
 #include "mapctrl.h"
-#include "springunitsync.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "ui.h"
 #include "server.h"
-#include "ibattle.h"
 #include "settings.h"
 #include "iconimagelist.h"
 
@@ -184,13 +186,13 @@ wxRect MapCtrl::GetMinimapRect() const
 
 wxRect MapCtrl::GetStartRect( int index ) const
 {
-    BattleStartRect sr = m_battle->GetStartRect( index );
+    LSL::Battle::BattleStartRect sr = m_battle->GetStartRect( index );
     if ( !sr.IsOk() ) return wxRect();
     return GetStartRect( sr );
 }
 
 
-wxRect MapCtrl::GetStartRect( const BattleStartRect& sr ) const
+wxRect MapCtrl::GetStartRect( const LSL::Battle::BattleStartRect& sr ) const
 {
     int x1,y1,x2,y2;
     if ( !sr.exist || sr.todelete ) return wxRect();
@@ -340,7 +342,7 @@ void MapCtrl::_SetCursor()
     if ( m_battle != 0 )
     {
         long longval;
-        m_battle->CustomBattleOptions().getSingleValue( _T("startpostype") , OptionsWrapper::EngineOption ).ToLong( &longval );
+        m_battle->CustomBattleOptions().getSingleValue( _T("startpostype") , LSL::Enum::OptionsWrapper::EngineOption ).ToLong( &longval );
         if ( longval != IBattle::ST_Choose )
         {
             SetCursor( wxCursor( wxCURSOR_ARROW ) );

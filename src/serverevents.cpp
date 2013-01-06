@@ -17,11 +17,11 @@
 #include "mainwindow.h"
 #include "ui.h"
 #include "channel/channel.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "utils/debug.h"
 #include "uiutils.h"
 #include "server.h"
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include <downloader/httpdownloader.h>
 #include "settings.h"
 #include "utils/customdialogs.h"

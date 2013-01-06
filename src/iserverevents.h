@@ -2,7 +2,8 @@
 #define ISERVEREVENTS_H
 
 //almost only needed for NAtType enum def
-#include "battle.h"
+//#include "battle.h"
+#include <lsl/battle/enum.h>
 
 struct MessageSpamCheck
 {
@@ -57,7 +58,7 @@ class IServerEvents
 	virtual void OnUserStatus( const wxString& nick, UserStatus status ) = 0;
 	virtual void OnUserQuit( const wxString& nick ) = 0;
 
-	virtual void OnBattleOpened( int id, BattleType type, NatType nat, const wxString& nick,
+	virtual void OnBattleOpened( int id, LSL::Enum::BattleType type, LSL::Enum::NatType nat, const wxString& nick,
 						 const wxString& host, int port, int maxplayers,
 						 bool haspass, int rank, const wxString& maphash, const wxString& map,
 						 const wxString& title, const wxString& mod ) = 0;

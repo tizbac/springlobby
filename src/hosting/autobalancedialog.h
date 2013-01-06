@@ -3,7 +3,7 @@
 
 //(*Headers(AutoBalanceDialog)
 #include <wx/dialog.h>
-#include "ibattle.h"
+#include <lsl/battle/ibattle.h>
 //*)
 
 class wxButton;

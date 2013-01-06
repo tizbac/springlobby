@@ -1,10 +1,10 @@
 /* Author: Tobi Vollebregt */
 
 #include "autohost.h"
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include "server.h"
 #include "settings.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "utils/conversion.h"
 #include "utils/misc.h"
 #include "utils/platform.h"

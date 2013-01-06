@@ -3,7 +3,7 @@
 
 #include <wx/scrolwin.h>
 #include <map>
-#include "mmoptionswrapper.h"
+#include <lslunitsync/optionswrapper.h>
 
 const int BOOL_START_ID = 3000;
 const int FLOAT_START_ID = 4000;
@@ -143,7 +143,7 @@ enum
   BOPTS_CHOSEPRES
 };
 
-#include "battleroommmoptionstab.cxx"
+#include "battleroommmoptionstab.cpp"
 
 #endif /*BATTLEROOMMMOPTIONSTAB_H_*/
 

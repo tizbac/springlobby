@@ -2,7 +2,7 @@
 
 #include "mapselectdialog.h"
 
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include "server.h"
 #include "settings.h"
 #include "ui.h"

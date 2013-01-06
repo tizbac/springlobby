@@ -19,7 +19,7 @@
 //#include "PlaybackListFiltervalues.h"
 #include "playbackfiltervalues.h"
 #include "../battlelist/battlelistctrl.h"
-#include "../battle.h"
+#include <lsl/battle/battle.h>
 #include "../uiutils.h"
 #include "../utils/tasutil.h"
 #include "../utils/conversion.h"

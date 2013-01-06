@@ -4,7 +4,7 @@
 #include <wx/panel.h>
 
 #include "battlelisttab.h"
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include "utils/mixins.hh"
 ///////////////////////////////////////////////////////////////////////////
 

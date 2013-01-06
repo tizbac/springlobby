@@ -15,6 +15,7 @@
 #include <wx/log.h>
 #include <wx/platinfo.h>
 #include <wx/sstream.h>
+#include <wx/utils.h>
 
 #include "utils/curlhelper.h"
 #include "utils/platform.h"
@@ -22,7 +23,7 @@
 #include "utils/conversion.h"
 #include "settings.h"
 #include "stacktrace.h"
-#include "springunitsync.h"
+#include "lslunitsync/unitsync.h"
 
 NetDebugReport::NetDebugReport( const char* url )
 	: m_url( url )
@@ -110,13 +111,15 @@ void SpringDebugReport::AddVFSFile( const wxString& fn, const wxString& id )
 	wxString dir = sett().GetCurrentUsedDataDir() + wxFileName::GetPathSeparator();
 	AddFile( dir + fn, id );
 	return;//TODO: wtf is there a return here?
-	wxArrayString res = usync().FindFilesVFS( fn );
+/*
+	const char* res = LSL::usync().FindFilesVFS( fn.c_str()) );
 	if ( res.Count() > 0 ) {
 		AddFile( res[0], id );
 		wxLogError( _T("SpringDebugReport: file found: "), res[0].c_str() );
 	}
 	else
 		wxLogError( _T("SpringDebugReport: file not found: "), fn.c_str() );
+*/
 }
 
 SpringDebugReport::SpringDebugReport()

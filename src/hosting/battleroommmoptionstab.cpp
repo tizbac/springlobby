@@ -16,8 +16,8 @@
 
 #include "utils/controls.h"
 #include <lslutils/misc.h>
-#include "mmoptionswrapper.h"
-#include "battle.h"
+#include <lslunitsync/optionswrapper.h>
+#include <lsl/battle/battle.h>
 #include "gui/spinctl/spinctrl.h"
 #include "utils/customdialogs.h"
 #include "server.h"

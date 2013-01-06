@@ -7,7 +7,9 @@ class ConnectWindow;
 class Spring;
 class MainWindow;
 class Channel;
-class User;
+namespace LSL{
+	class User;
+}
 class IBattle;
 class Battle;
 class SinglePlayerBattle;
@@ -95,22 +97,22 @@ class Ui : public SL::NonCopyable
 
     void OnJoinedChannelSuccessful( Channel& chan );
 	void OnJoinedChannelSuccessful( Channel& chan, bool focusTab );
-    void OnUserJoinedChannel( Channel& chan, User& user );
-    void OnChannelJoin( Channel& chan, User& user );
-    void OnUserLeftChannel( Channel& chan, User& user, const wxString& reason );
+    void OnUserJoinedChannel( Channel& chan, LSL::User& user );
+    void OnChannelJoin( Channel& chan, LSL::User& user );
+    void OnUserLeftChannel( Channel& chan, LSL::User& user, const wxString& reason );
 
     void OnChannelTopic( Channel& channel , const wxString& user, const wxString& topic );
-    void OnChannelSaid( Channel& channel , User& user, const wxString& message );
-    void OnChannelDidAction( Channel& channel , User& user, const wxString& action );
+    void OnChannelSaid( Channel& channel , LSL::User& user, const wxString& message );
+    void OnChannelDidAction( Channel& channel , LSL::User& user, const wxString& action );
     void OnChannelMessage( const wxString& channel, const wxString& msg );
 
     void OnLeaveChannel( wxString& name  );
     void OnChannelList( const wxString& channel, const int& numusers );
-    void OnUserOnline( User& user );
-    void OnUserOffline( User& user );
-    void OnUserStatusChanged( User& user );
-    void OnUserSaid( User& user, const wxString& message, bool me = false );
-	void OnUserSaidEx( User& user, const wxString& action, bool me = false );
+    void OnUserOnline( LSL::User& user );
+    void OnUserOffline( LSL::User& user );
+    void OnUserStatusChanged( LSL::User& user );
+    void OnUserSaid( LSL::User& user, const wxString& message, bool me = false );
+	void OnUserSaidEx( LSL::User& user, const wxString& action, bool me = false );
 
     void OnUnknownCommand( Server& server, const wxString& command, const wxString& params );
     void OnMotd( Server& server, const wxString& message );
@@ -119,15 +121,15 @@ class Ui : public SL::NonCopyable
 
     void OnBattleOpened( IBattle& battle );
     void OnBattleClosed( IBattle& battle );
-    void OnUserJoinedBattle( IBattle& battle, User& user );
-    void OnUserLeftBattle( IBattle& battle, User& user, bool isbot );
+    void OnUserJoinedBattle( IBattle& battle, LSL::User& user );
+    void OnUserLeftBattle( IBattle& battle, LSL::User& user, bool isbot );
 	void OnBattleInfoUpdated( BattleEvents::BattleEventData data );
 //    void OnBattleInfoUpdated( IBattle& battle, const wxString& Tag );
     void OnBattleStarted( Battle& battle );
 
     void OnJoinedBattle( Battle& battle );
     void OnHostedBattle( Battle& battle );
-    void OnUserBattleStatus( IBattle& battle, User& user );
+    void OnUserBattleStatus( IBattle& battle, LSL::User& user );
     void OnRequestBattleStatus( IBattle& battle );
 
     void OnSaidBattle( IBattle& battle, const wxString& nick, const wxString& msg );
@@ -145,8 +147,8 @@ class Ui : public SL::NonCopyable
     //! ask to download missing map, return true if download attempted
     bool OnPresetRequiringMap( const wxString& mapname );
 
-    bool IsThisMe(User& other) const;
-    bool IsThisMe(User* other) const;
+    bool IsThisMe(LSL::User& other) const;
+    bool IsThisMe(LSL::User* other) const;
     bool IsThisMe(const wxString& other) const;
 
     int TestHostPort( unsigned int port ) const;

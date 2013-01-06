@@ -3,6 +3,5 @@ add_sources(springlobbySrc
 	channelchooserdialog.cpp
 	autojoinchanneldialog.cpp
 	channel.cpp
-	channellist.cpp
 	channellistctrl.cpp
 )

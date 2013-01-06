@@ -35,12 +35,14 @@
 #include <wx/display.h>
 
 #include "../utils/customdialogs.h"
-#include "../springunitsynclib.h"
+#include "lslunitsync/unitsync.h"
+#include "lslunitsync/c_api.h"
 
 #include "ctrlconstants.h"
 #include "se_utils.h"
 #include "../settings.h"
 #include "presets.h"
+#include "../utils/conversion.h"
 
 #include "../utils/debug.h"
 
@@ -126,11 +128,11 @@ bool abstract_panel::loadValuesIntoMap()
 
 		for (int i = 0; i< intControls_size;++i)
 		{
-			intSettings[intControls[i].key] = configHandler.GetSpringConfigInt(intControls[i].key,fromString(intControls[i].def));
+			intSettings[intControls[i].key] = configHandler.GetSpringConfigInt(STD_STRING(intControls[i].key),fromString(intControls[i].def));
 		}
 		for (int i = 0; i< floatControls_size;++i)
 		{
-			float tmp = configHandler.GetSpringConfigFloat(floatControls[i].key,fromString(floatControls[i].def));
+			float tmp = configHandler.GetSpringConfigFloat(STD_STRING(floatControls[i].key),fromString(floatControls[i].def));
 			floatSettings[floatControls[i].key] = tmp;
 		}
 	}
@@ -599,7 +601,7 @@ bool abstract_panel::saveSettings() {
 	try {
 		for (intMap::const_iterator i = intSettings.begin(); i != intSettings.end();++i)
 		{
-			configHandler.SetSpringConfigInt(i->first,i->second);
+			configHandler.SetSpringConfigInt(STD_STRING(i->first),i->second);
 		}
 //		for (stringMap::const_iterator s = stringSettings.begin(); s != stringSettings.end();++s)
 //		{
@@ -608,7 +610,7 @@ bool abstract_panel::saveSettings() {
 //		}
 		for (floatMap::const_iterator f = floatSettings.begin(); f != floatSettings.end();++f)
 		{
-			configHandler.SetSpringConfigFloat(f->first,f->second);
+			configHandler.SetSpringConfigFloat(STD_STRING(f->first),f->second);
 		}
 	} catch (...) {
 		customMessageBox(SS_MAIN_ICON,_("Could not save, unitsync not properly loaded"), _("SpringSettings Error"), wxOK|wxICON_HAND, 0);

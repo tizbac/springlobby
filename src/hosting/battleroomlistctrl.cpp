@@ -15,12 +15,12 @@
 
 #include "battleroomlistctrl.h"
 #include "iconimagelist.h"
-#include "springunitsync.h"
-#include "battle.h"
-#include "ibattle.h"
+#include <lslunitsync/unitsync.h>
+#include <lsl/battle/battle.h>
+#include <lsl/battle/ibattle.h>
 #include "uiutils.h"
 #include "ui.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "server.h"
 #include "utils/debug.h"
 #include "utils/conversion.h"

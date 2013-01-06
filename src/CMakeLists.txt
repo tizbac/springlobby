@@ -128,15 +128,12 @@ add_sources(springlobbySrc
 	updater/updater.cpp
 	agreementdialog.cpp
 	base64.cpp
-	battle.cpp
-	crc.cpp
 	chatlog.cpp
 	chatpanel.cpp
 	connectwindow.cpp
 	countrycodes.cpp
 	customlistctrl.cpp
 	flagimages.cpp
-	ibattle.cpp
 	iconimagelist.cpp
 	introguide.cpp
 	mainchattab.cpp
@@ -161,12 +158,9 @@ add_sources(springlobbySrc
 	spring.cpp
 	springlobbyapp.cpp
 	springprocess.cpp
-	tasserver.cpp
 	tdfcontainer.cpp
 	ui.cpp
-	user.cpp
 	useractions.cpp
-	userlist.cpp
 	
 	toasterbox/ToasterBox.cpp
 	toasterbox/ToasterBoxWindow.cpp
@@ -199,11 +193,7 @@ add_sources(SLSharedWithSettings
 	utils/curlhelper.cpp
 	crashreport.cpp
 	globalsmanager.cpp
-	mmoptionmodel.cpp
-	mmoptionswrapper.cpp
 	settings.cpp
-	springunitsynclib.cpp
-	springunitsync.cpp
 	thread.cpp
 	infodialog.cpp
 	gui/windowattributespickle.cpp
@@ -217,7 +207,7 @@ FILE( GLOB header2 "*/*.h" )
 #grep -lR cpp\"$ * | sed -e "s/\.h/\.cpp/g"
 clear( templatesources)
 add_sources( templatesources
-	hosting/battleroommmoptionstab.cxx
+	hosting/battleroommmoptionstab.cpp
 	customvirtlistctrl.cpp
 	downloader/httpdownloader.cpp
 	playback/playbackfilter.cpp
@@ -278,7 +268,7 @@ IF(WIN32)
 ELSE (WIN32)
     install(TARGETS springlobby RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 	#only do this on platforms with awk expected to be installed
-	ADD_CUSTOM_TARGET(test_susynclib ALL COMMAND tools/test-susynclib.awk src/springunitsynclib.cpp WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+#	ADD_CUSTOM_TARGET(test_susynclib ALL COMMAND tools/test-susynclib.awk src/springunitsynclib.cpp WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 ENDIF (WIN32)
 
 TARGET_LINK_LIBRARIES(springlobby slcommon libsettings lsl-utils pr-downloader_static

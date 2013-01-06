@@ -16,7 +16,7 @@
 
 #include "../utils/misc.h"
 #include "../settings.h"
-#include "../springunitsync.h"
+#include <lslunitsync/unitsync.h>
 
 const int invalid_id = -1;
 

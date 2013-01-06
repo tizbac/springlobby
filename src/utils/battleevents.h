@@ -2,7 +2,7 @@
 #define SPRINGLOBBY_HEADERGUARD_BATTLEEVENTS_H
 
 #include "events.h"
-#include "../ibattle.h"
+#include <lsl/battle/ibattle.h>
 #include <utility>
 
 namespace BattleEvents {

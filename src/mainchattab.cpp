@@ -19,7 +19,7 @@
 #include "utils/controls.h"
 #include "mainwindow.h"
 #include "channel/channel.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "chatpanel.h"
 #include "ui.h"
 #include "server.h"

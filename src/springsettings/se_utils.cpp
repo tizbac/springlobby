@@ -12,7 +12,7 @@
 
 #include "../utils/customdialogs.h"
 #include "../settings.h"
-#include "../springunitsynclib.h"
+#include "lslunitsync/unitsync.h"
 
 static bool standalonemode = true;
 

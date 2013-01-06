@@ -37,8 +37,8 @@
 #include "utils/misc.h"
 #include "ui.h"
 #include "server.h"
-#include "user.h"
-#include "battle.h"
+#include <lsl/user/user.h>
+#include <lsl/battle/battle.h>
 #include "nicklistctrl.h"
 #include "mainwindow.h"
 #include "chatlog.h"
@@ -171,7 +171,7 @@ ChatPanel::ChatPanel( wxWindow* parent, Server& serv, wxImageList* imaglist  ):
 }
 
 
-ChatPanel::ChatPanel( wxWindow* parent, Battle* battle ):
+ChatPanel::ChatPanel( wxWindow* parent, LSL::Battle::Battle* battle ):
   wxPanel( parent, -1 ),
   m_show_nick_list( false ),
   m_nicklist( 0 ),
@@ -187,12 +187,11 @@ ChatPanel::ChatPanel( wxWindow* parent, Battle* battle ):
   m_topic_set( false )
 {
 	wxLogDebugFunc( _T( "wxWindow* parent, Battle& battle" ) );
-	if ( m_battle )
-	{
-		for (unsigned int i = 0; i < m_battle->GetNumUsers();++i)
-    {
-       textcompletiondatabase.Insert_Mapping( m_battle->GetUser(i).GetNick(), m_battle->GetUser(i).GetNick() );
-    }
+	if ( m_battle ) {
+		std::vector<wxString> users = m_battle->Users();
+		for (unsigned int i = 0; i < m_battle->GetNumUsers();++i) {
+			textcompletiondatabase.Insert_Mapping( users[i], users[i]) );
+		}
 	}
 	CreateControls( );
 	m_chatlog_text->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ChatPanel::OnMouseDown ), 0, this );
@@ -1013,8 +1012,8 @@ bool ChatPanel::Say( const wxString& message )
 				return true;
 			}
 			if ( line.StartsWith( _T( "/" ) ) ) {
-				if ( m_battle->ExecuteSayCommand( line ) ) return true;
-				if ( m_battle->GetServer().ExecuteSayCommand( line ) ) return true;
+				if ( m_battle->ExecuteSayCommand( STD_STRING(line) ) ) return true;
+				if ( m_battle->GetServer().ExecuteSayCommand( STD_STRING(line) ) return true;
 				OutputLine( wxFormat( _( " Error: Command (%s) does not exist, use /help for a list of available commands." ) ) % line, sett().GetChatColorError(), sett().GetChatFont() );
 				return true;
 			}

@@ -17,14 +17,14 @@
 #include "utils/debug.h"
 #include "utils/conversion.h"
 #include "iconimagelist.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "settings.h"
 #include "ui.h"
 #include "mainwindow.h"
 #include "countrycodes.h"
 #include "chatpanel.h"
 #include "chatpanelmenu.h"
-#include "userlist.h"
+#include <lsl/container/userlist.h>
 #include "usermenu.h"
 #include "Helper/sortutil.h"
 

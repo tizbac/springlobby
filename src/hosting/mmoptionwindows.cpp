@@ -13,11 +13,12 @@
 #include <wx/tooltip.h>
 #include <wx/textctrl.h>
 
-#include "ui.h"
-#include "mmoptionswrapper.h"
-#include "battle.h"
-#include "utils/controls.h"
+#include <lslunitsync/optionswrapper.h>
 #include <lslutils/misc.h>
+
+#include "ui.h"
+#include <lsl/battle/battle.h>
+#include "utils/controls.h"
 #include "utils/conversion.h"
 #include "gui/spinctl/spinctrl.h"
 

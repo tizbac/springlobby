@@ -6,7 +6,11 @@
 #include <map>
 #include <vector>
 
-class IBattle;
+namespace LSL {
+	namespace Battle {
+		class IBattle;
+	}
+}
 class wxColour;
 struct UserStatus;
 
@@ -21,8 +25,8 @@ class IconImageList : public wxImageList
 	int GetRankLimitIcon(  int rank, bool showlowest = true ) const;
 	int GetRankIcon( const unsigned int& rank, const bool& showlowest = true ) const;
 	int GetFlagIcon( const wxString& flagname ) const;
-    int GetBattleStatusIcon( const IBattle& battle ) const;
-    wxString GetBattleStatus(const IBattle& battle) const;
+    int GetBattleStatusIcon( const LSL::Battle::IBattle& battle ) const;
+    wxString GetBattleStatus(const LSL::Battle::IBattle& battle) const;
 	int GetHostIcon( const bool& spectator = false ) const;
 	int GetColourIcon( const wxColour& colour ) const;
 	void SetColourIcon( const wxColour& colour );

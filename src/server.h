@@ -4,9 +4,10 @@
 #include <wx/string.h>
 #include <wx/arrstr.h>
 
-#include "channel/channellist.h"
-#include "userlist.h"
-#include "battlelist/battlelist.h"
+#include <lsl/container/channellist.h>
+#include <lsl/container/userlist.h>
+#include <lsl/container/battlelist.h>
+#include <lsl/battle/battle.h>
 #include "inetclass.h"
 #include "utils/mixins.hh"
 
@@ -28,7 +29,7 @@ typedef int HostInfo;
 
 
 //! @brief Abstract baseclass that is used to implement a server protocol.
-class Server : public iNetClass, public SL::NonCopyable
+class Server : public iNetClass, public LSL::Battle::Battle, public SL::NonCopyable
 {
   public:
 	friend class ServerEvents;
@@ -51,7 +52,7 @@ class Server : public iNetClass, public SL::NonCopyable
     UiServerData uidata;
 
 
-    Server();
+    Server(int id);
     virtual ~Server( );
 
     // Server interface
@@ -151,10 +152,10 @@ class Server : public iNetClass, public SL::NonCopyable
 
     virtual void OnDisconnected();
 
-    BattleList_Iter* const battles_iter;
+//    BattleList_Iter* const battles_iter;
 
-    virtual const User& GetMe() const = 0;
-    virtual User& GetMe() = 0;
+    virtual const LSL::ConstCommonUserPtr GetMe() const = 0;
+    virtual const LSL::CommonUserPtr GetMe() = 0;
     User& GetUser( const wxString& nickname ) const;
     bool UserExists( const wxString& nickname ) const;
 
@@ -175,9 +176,9 @@ class Server : public iNetClass, public SL::NonCopyable
     std::map<wxString,wxString> m_channel_pw;  /// channel name -> password, filled on channel join
 
     ///used to fill userlist in groupuserdialog
-    const UserList& GetUserList() const {return m_users;}
+    const LSL::UserList& GetUserList() const {return m_users;}
 
-    unsigned int GetNumUsers() const { return m_users.GetNumUsers(); }
+    unsigned int GetNumUsers() const { return m_users.size(); }
 
     wxString GetServerName() const { return m_server_name; }
 
@@ -198,9 +199,9 @@ class Server : public iNetClass, public SL::NonCopyable
     bool m_pass_hash;
     wxString m_required_spring_ver;
 
-    ChannelList m_channels;
-    UserList m_users;
-    BattleList m_battles;
+    LSL::ChannelList m_channels;
+    LSL::UserList m_users;
+    LSL::Battle::BattleList m_battles;
 
     wxString m_relay_host_bot;
     wxString m_relay_host_manager;
@@ -213,7 +214,7 @@ class Server : public iNetClass, public SL::NonCopyable
     Channel& _AddChannel( const wxString& chan );
     void _RemoveChannel( const wxString& name );
 
-    Battle& _AddBattle( const int& id );
+    LSL::Battle::Battle& _AddBattle( const int& id );
     void _RemoveBattle( const int& id );
 
     static const unsigned int PING_TIMEOUT = 40;

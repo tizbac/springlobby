@@ -19,8 +19,8 @@
 #ifndef NOGUISINGLEPLAYERBATTLE_H
 #define NOGUISINGLEPLAYERBATTLE_H
 
-#include "../ibattle.h"
-#include "../user.h"
+#include <lsl/battle/ibattle.h>
+#include <lsl/user/user.h>
 
 class wxString;
 

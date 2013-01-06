@@ -8,7 +8,7 @@
 //#include "../utils.h"
 #include "replaylist.h"
 #include "savegamelist.h"
-#include "../springunitsync.h"
+#include <lslunitsync/unitsync.h>
 
 template <class PlaybackTabImp >
 PlaybackLoader<PlaybackTabImp>::PlaybackLoader( ParentType* parent )

@@ -21,7 +21,7 @@
 #include "../globalsmanager.h"
 #include "lib/src/Downloader/IDownloader.h"
 #include "lib/src/FileSystem/FileSystem.h"
-#include "../springunitsync.h"
+#include <lslunitsync/unitsync.h>
 #include "../utils/uievents.h"
 #include "../utils/conversion.h"
 #include "../ui.h"

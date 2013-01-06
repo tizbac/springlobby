@@ -19,14 +19,13 @@
 #include "utils/conversion.h"
 #include "uiutils.h"
 #include "ui.h"
-#include "springunitsync.h"
+#include <lslunitsync/unitsync.h>
 #include "hosting/addbotdialog.h"
 #include "server.h"
 #include "settings.h"
 #include "Helper/colorbutton.h"
 #include "aui/auimanager.h"
 #include "utils/customdialogs.h"
-#include "springunitsynclib.h"
 
 BEGIN_EVENT_TABLE(SinglePlayerTab, wxPanel)
 

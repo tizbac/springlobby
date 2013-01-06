@@ -1,10 +1,14 @@
 /* Copyright (C) 2007-2011 The SpringLobby Team. All rights reserved. */
 
 #include "customizations.h"
-#include "springunitsynclib.h"
 #include "images/springlobby.xpm"
 #include "images/springlobby_64.png.h"
+#include "lslunitsync/image.h"
+#include "lslunitsync/enum.h"
+#include "lslunitsync/c_api.h"
+#include "lslunitsync/unitsync.h"
 #include "uiutils.h"
+#include "utils/conversion.h"
 
 #include <wx/image.h>
 #include <wx/frame.h>
@@ -15,7 +19,7 @@
 #endif
 const wxString Customizations::IntroKey = wxString ( _T("intro_file") );
 
-const OptionsWrapper& Customizations::GetCustomizations() const
+const LSL::OptionsWrapper& Customizations::GetCustomizations() const
 {
     return m_customs;
 }
@@ -35,7 +39,7 @@ const wxIconBundle& Customizations::GetAppIconBundle() const
   */
 const wxString& Customizations::GetHelpUrl() const
 {
-    return m_help_url;
+    return TowxString(m_help_url);
 }
 
 /** @brief GetModname
@@ -59,9 +63,9 @@ const wxString& Customizations::Archive() const
 bool Customizations::Init( const wxString& archive_name )
 {
     m_archive = archive_name;
-    susynclib().AddArchive( m_archive );
+    LSL::susynclib().AddArchive( STD_STRING(m_archive) );
 	//!TODO require blocking usync init if it's not loaded
-    bool ret = m_customs.loadOptions( OptionsWrapper::ModCustomizations, m_archive );
+    bool ret = m_customs.loadOptions( LSL::OptionsWrapper::ModCustomizations, STD_STRING(m_archive) );
     if ( ret ) {
 		wxBitmap icon_bmp( wxNullBitmap );
 		if ( GetBitmap( _T("icon"), icon_bmp ) )
@@ -76,7 +80,7 @@ bool Customizations::Init( const wxString& archive_name )
 				m_app_icons.AddIcon( tmp );
 			}
 		}
-        m_help_url = m_customs.getSingleValue( _T("help_url") );
+        m_help_url = TowxString(m_customs.getSingleValue( "help_url"));
     }
 	m_active =  ret;
     return ret;
@@ -97,11 +101,12 @@ bool Customizations::GetBitmap( const wxString& key, wxBitmap& bitmap )
 {
 	if ( Provides( key ) )
 	{
-		const wxString path = m_customs.getSingleValue( key );
+		const wxString path = TowxString(m_customs.getSingleValue( TOSTRING(key) ));
 #ifdef SL_QT_MODE
         wxBitmap icon_bmp ( wxQtConvertImage( usync().GetQImage( m_archive, path, false ) ) );
 #else
-        wxBitmap icon_bmp (usync().GetImage( m_archive, path, false ) );
+//FIXME!!!!
+        wxBitmap icon_bmp; // ( LSL::usync().GetImage( TOSTRING(m_archive), TOSTRING(path), false ) );
 #endif
 		if( icon_bmp.IsOk() )
 		{
@@ -119,8 +124,8 @@ bool Customizations::Active() const
 
 bool Customizations::KeyExists( const wxString& key ) const
 {
-	OptionType dummy;
-	return m_customs.keyExists( key, OptionsWrapper::ModCustomizations, false, dummy );
+	LSL::Enum::OptionType dummy;
+	return m_customs.keyExists( TOSTRING(key), LSL::OptionsWrapper::ModCustomizations, false, dummy );
 }
 
 bool Customizations::Provides( const wxString& key ) const
@@ -132,7 +137,7 @@ wxString Customizations::GetIntroText() const
 {
 	if ( !m_active )
 		return wxEmptyString;
-    return usync().GetTextfileAsString( m_archive, m_customs.getSingleValue( IntroKey ) );
+	return TowxString(LSL::usync().GetTextfileAsString(STD_STRING(m_archive), m_customs.getSingleValue( STD_STRING(IntroKey) )));
 }
 
 /** @brief SLcustomizations

@@ -29,9 +29,9 @@
 
 #include "battleroomtab.h"
 #include "ui.h"
-#include "springunitsync.h"
-#include "user.h"
-#include "battle.h"
+#include <lslunitsync/unitsync.h>
+#include <lsl/user/user.h>
+#include <lsl/battle/battle.h>
 #include "defines.h"
 #include "utils/conversion.h"
 #include "utils/debug.h"

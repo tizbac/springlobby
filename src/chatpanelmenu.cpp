@@ -9,8 +9,8 @@
 #include "utils/debug.h"
 #include "ui.h"
 #include "server.h"
-#include "user.h"
-#include "battle.h"
+#include <lsl/user/user.h>
+#include <lsl/battle/battle.h>
 #include "nicklistctrl.h"
 #include "mainwindow.h"
 #include "settings.h"
@@ -140,7 +140,7 @@ wxMenu* ChatPanelMenu::GetMenu()
 	}
 	else if ( m_chatpanel->m_type == CPT_User ) {
         if ( m_chatpanel->m_user )
-            m_user_menu->EnableItems( true, m_chatpanel->m_user->GetNick() );
+            m_user_menu->EnableItems( true, m_chatpanel->m_user->Nick() );
         m_menu_all->AppendSubMenu( m_user_menu, _("User") );
 	}
 
@@ -169,7 +169,7 @@ void ChatPanelMenu::CreateNickListMenu()
 	bool moderator = false;
 	try
 	{
-		moderator = serverSelector().GetServer().GetMe().GetStatus().moderator;
+		moderator = serverSelector().GetServer().GetMe().GetRank().moderator;
 	}catch(...){}
 	if ( moderator ) {
 		wxMenuItem* modingameitem = new wxMenuItem( m_user_menu, CHAT_MENU_US_MODERATOR_INGAME, _( "Ingame time" ), wxEmptyString, wxITEM_NORMAL );

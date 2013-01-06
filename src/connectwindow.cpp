@@ -25,7 +25,7 @@
 #include "images/connect.xpm"
 #include "utils/controls.h"
 #include "utils/tasutil.h"
-
+#include "utils/conversion.h"
 #include "utils/customdialogs.h"
 
 // Define events.

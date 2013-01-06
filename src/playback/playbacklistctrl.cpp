@@ -7,7 +7,7 @@
 
 #include "playbackstructs.h"
 //#include "../utils.h"
-#include "../user.h"
+#include <lsl/user/user.h>
 #include "../iconimagelist.h"
 #include "../uiutils.h"
 #include "../ui.h"

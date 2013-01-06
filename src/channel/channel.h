@@ -1,7 +1,7 @@
 #ifndef SPRINGLOBBY_HEADERGUARD_CHANNEL_H
 #define SPRINGLOBBY_HEADERGUARD_CHANNEL_H
 
-#include "../userlist.h"
+#include <lsl/container/userlist.h>
 #include <set>
 #include <wx/regex.h>
 #include "../utils/mixins.hh"
@@ -17,7 +17,7 @@ struct UiChannelData {
   ChatPanel* panel;
 };
 
-class Channel : public UserList, public SL::NonCopyable
+class Channel : public LSL::UserList, public SL::NonCopyable
 {
   public:
 
@@ -31,7 +31,7 @@ class Channel : public UserList, public SL::NonCopyable
 
     void SetName( const wxString& name );
     wxString GetName();
-    User& GetMe();
+    LSL::User& GetMe();
 
     // filtering functions
     void CheckBanned(const wxString& name);
@@ -43,14 +43,14 @@ class Channel : public UserList, public SL::NonCopyable
     void Leave();
 	void Rejoin();
 
-    void Said( User& who, const wxString& message );
+    void Said( LSL::User& who, const wxString& message );
 
-    void DidAction( User& who, const wxString& action );
+    void DidAction( LSL::User& who, const wxString& action );
 
-    void Left( User& who, const wxString& reason );
-    void Joined( User& who );
+    void Left( LSL::User& who, const wxString& reason );
+    void Joined( LSL::User& who );
 
-    void OnChannelJoin( User& who );
+    void OnChannelJoin( LSL::User& who );
 
     void SetTopic( const wxString& topic, const wxString& who );
     wxString GetTopic();
@@ -82,7 +82,7 @@ class Channel : public UserList, public SL::NonCopyable
 
     wxString m_password;
 
-    void AddUser( User& user );
+    void AddUser( LSL::User& user );
     void RemoveUser( const wxString& nick );
 };
 

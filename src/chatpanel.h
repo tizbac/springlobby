@@ -22,10 +22,16 @@ class wxButton;
 class wxBitmapButton;
 class NickListCtrl;
 class Channel;
-class User;
+namespace LSL{
+	class User;
+}
 class ChatLog;
 class Server;
-class Battle;
+namespace LSL {
+	namespace Battle {
+		class Battle;
+	}
+}
 class Ui;
 class wxStaticText;
 
@@ -70,9 +76,9 @@ class ChatPanel : public wxPanel, public OnLoginSink<ChatPanel>, public SL::NonC
   public:
 
     ChatPanel( wxWindow* parent, Channel& chan, wxImageList* imaglist );
-    ChatPanel( wxWindow* parent, const User& user, wxImageList* imaglist  );
+    ChatPanel( wxWindow* parent, const LSL::User& user, wxImageList* imaglist  );
     ChatPanel( wxWindow* parent, Server& serv, wxImageList* imaglist  );
-    ChatPanel( wxWindow* parent, Battle* battle );
+    ChatPanel( wxWindow* parent, LSL::Battle::Battle* battle );
     ~ChatPanel();
 
     void Said( const wxString& who, const wxString& message );
@@ -83,11 +89,11 @@ class ChatPanel : public wxPanel, public OnLoginSink<ChatPanel>, public SL::NonC
 
     void UnknownCommand( const wxString& command, const wxString& params );
 
-    void Joined( User& who );
-    void Parted( User& who, const wxString& message );
+    void Joined( LSL::User& who );
+    void Parted( LSL::User& who, const wxString& message );
     void SetTopic( const wxString& who, const wxString& message );
-    void UserStatusUpdated( User& who );
-    void OnChannelJoin( User& who );
+    void UserStatusUpdated( LSL::User& who );
+    void OnChannelJoin( LSL::User& who );
 
     const Channel* GetChannel() const;
     void SetChannel( Channel* chan );
@@ -95,13 +101,13 @@ class ChatPanel : public wxPanel, public OnLoginSink<ChatPanel>, public SL::NonC
     const Server* GetServer()  const;
     void SetServer( Server* serv );
 
-    const User* GetUser() const ;
-    void SetUser( const User* usr );
+    const LSL::User* GetUser() const ;
+    void SetUser( const LSL::User* usr );
 
     bool IsServerPanel() const;
     ChatPanelType GetPanelType() const;
 
-    void SetBattle( Battle* battle );
+    void SetBattle( LSL::Battle::Battle* battle );
 
 	//! @returns true on success ( blank line ), false otherwise
 	bool Say( const wxString& message );
@@ -113,8 +119,8 @@ class ChatPanel : public wxPanel, public OnLoginSink<ChatPanel>, public SL::NonC
     size_t GetIconIndex()  const { return m_icon_index; }
     void SetIconIndex( size_t index ) { m_icon_index = index; }
 
-    const User& GetMe()  const;
-    const User* GetSelectedUser() const;
+    const LSL::User& GetMe()  const;
+    const LSL::User* GetSelectedUser() const;
 
     bool IsOk() const;
 
@@ -172,8 +178,8 @@ class ChatPanel : public wxPanel, public OnLoginSink<ChatPanel>, public SL::NonC
 
     Channel* m_channel;         //!< Channel object.
     Server* m_server;           //!< Server object.
-    const User* m_user;               //!< User object.
-    Battle* m_battle;           //!< User object.
+    const LSL::User* m_user;               //!< User object.
+    LSL::Battle::Battle* m_battle;           //!< User object.
 
     wxStaticText* m_usercount_label;
 

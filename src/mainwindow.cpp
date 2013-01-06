@@ -47,7 +47,7 @@
 #include "hosting/mainsingleplayertab.h"
 #include "battlelist/battlelisttab.h"
 #include "options/mainoptionstab.h"
-#include "springunitsync.h"
+#include <lslunitsync/unitsync.h>
 #include "uiutils.h"
 #include "utils/misc.h"
 #include "chatpanel.h"
@@ -55,7 +55,7 @@
 #include "playback/playbacktab.h"
 #include "infodialog.h"
 #include "maindownloadtab.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "mapselectdialog.h"
 
 #include "images/chat_icon.png.h"

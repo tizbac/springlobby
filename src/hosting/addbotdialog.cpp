@@ -13,8 +13,8 @@
 #include "settings.h"
 #include "utils/controls.h"
 #include "uiutils.h"
-#include "battle.h"
-#include "springunitsync.h"
+#include <lsl/battle/battle.h>
+#include <lslunitsync/unitsync.h>
 #include "mmoptionwindows.h"
 #include "utils/conversion.h"
 

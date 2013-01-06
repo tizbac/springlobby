@@ -29,13 +29,13 @@
 #include "utils/debug.h"
 #include "utils/conversion.h"
 #include "settings.h"
-#include "userlist.h"
-#include "battle.h"
+#include <lsl/container/userlist.h>
+#include <lsl/battle/battle.h>
 #include "singleplayerbattle.h"
 #include "qt/noguisingleplayerbattle.h"
 #include "offlinebattle.h"
 #include "user.h"
-#include "springunitsync.h"
+#include <lslunitsync/unitsync.h>
 #include "nonportable.h"
 #include "tdfcontainer.h"
 #include "globalsmanager.h"

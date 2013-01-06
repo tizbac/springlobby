@@ -18,9 +18,9 @@
 
 #include "iconimagelist.h"
 #include "ui.h"
-#include "userlist.h"
+#include <lsl/container/userlist.h>
 #include "server.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "utils/conversion.h"
 #include "useractions.h"
 

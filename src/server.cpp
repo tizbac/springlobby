@@ -8,16 +8,16 @@
 
 #include "server.h"
 #include "socket.h"
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include "channel/channel.h"
-#include "user.h"
+#include <lsl/user/user.h>
 #include "ui.h"
 #include "utils/debug.h"
 #include "utils/conversion.h"
 #include "chatpanel.h"
 
-Server::Server():
-battles_iter(new BattleList_Iter(&m_battles)),
+Server::Server(int id):
+LSL::Battle::Battle((LSL::Server)*this, id),
 m_keepalive(15),
 m_pass_hash(false)
 {
@@ -26,7 +26,7 @@ m_pass_hash(false)
 
 Server::~Server()
 {
-	delete battles_iter;
+//delete battles_iter;
   if(uidata.panel)uidata.panel->SetServer(NULL);
   delete m_sock;
 }
@@ -93,7 +93,7 @@ User& Server::_AddUser( const wxString& user )
 void Server::_RemoveUser( const wxString& nickname )
 {
   try{
-    User* u = &m_users.GetUser( nickname );
+    User* u = &m_users.Get( nickname );
     m_users.RemoveUser( nickname );
     int numchannels = m_channels.GetNumChannels();
     for ( int i = 0; i < numchannels; i++ )
@@ -126,10 +126,10 @@ void Server::_RemoveChannel( const wxString& name )
   delete c;
 }
 
-Battle& Server::_AddBattle( const int& id )
+LSL::Battle::Battle& Server::_AddBattle( const int& id )
 {
   if ( battles_iter->BattleExists( id ) ) return battles_iter->GetBattle( id );
-  Battle* b = new Battle( *this, id );
+  LSL::Battle::Battle* b = new LSL::Battle::Battle( (LSL::Battle::Battle) *this, id );
 
   m_battles.AddBattle( *b );
   return *b;
@@ -138,7 +138,7 @@ Battle& Server::_AddBattle( const int& id )
 
 void Server::_RemoveBattle( const int& id )
 {
-  Battle* b = &battles_iter->GetBattle( id );
+  LSL::Battle::Battle* b = &battles_iter->GetBattle( id );
   m_battles.RemoveBattle( id );
   ASSERT_LOGIC( b != 0, _T("Server::_RemoveBattle(): GetBattle returned NULL pointer"));
   delete b;
@@ -150,7 +150,7 @@ void Server::OnDisconnected()
   while ( battles_iter->GetNumBattles() > 0 )
   {
     battles_iter->IteratorBegin();
-    Battle* b = battles_iter->GetBattle();
+    LSL::Battle::Battle* b = battles_iter->GetBattle();
     if (b!=0)
     {
         m_battles.RemoveBattle( b->GetBattleId() );

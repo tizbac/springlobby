@@ -3,10 +3,11 @@
 #ifndef SPRINGLOBBY_HEADERGUARD_MAPGRIDCTRL_H
 #define SPRINGLOBBY_HEADERGUARD_MAPGRIDCTRL_H
 
-#include "springunitsync.h"
+#include <lslunitsync/unitsync.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/panel.h>
+#include "mapctrl.h"
 
 class Ui;
 

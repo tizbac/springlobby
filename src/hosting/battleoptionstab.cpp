@@ -20,11 +20,11 @@
 #include <wx/numdlg.h>
 
 #include "battleoptionstab.h"
-#include "springunitsync.h"
-#include "ibattle.h"
+#include <lslunitsync/unitsync.h>
+#include <lsl/battle/ibattle.h>
 #include "utils/controls.h"
 #include "server.h"
-#include "mmoptionswrapper.h"
+#include <lslunitsync/optionswrapper.h>
 #include "aui/auimanager.h"
 
 

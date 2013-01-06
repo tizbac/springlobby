@@ -21,10 +21,10 @@
 #include <stdexcept>
 
 #include "battlemaptab.h"
-#include "springunitsync.h"
+#include <lslunitsync/unitsync.h>
 #include "ui.h"
-#include "user.h"
-#include "battle.h"
+#include <lsl/user/user.h>
+#include <lsl/battle/battle.h>
 #include "utils/debug.h"
 #include "utils/controls.h"
 #include "chatpanel.h"

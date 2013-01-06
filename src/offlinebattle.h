@@ -1,7 +1,7 @@
 #ifndef OFFLINEBATTLE_H_INCLUDED
 #define OFFLINEBATTLE_H_INCLUDED
 
-#include "ibattle.h"
+#include <lsl/battle/ibattle.h>
 
 class OfflineBattle : public IBattle
 {

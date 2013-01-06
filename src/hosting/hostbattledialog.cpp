@@ -28,8 +28,8 @@
 
 
 #include "settings.h"
-#include "springunitsync.h"
-#include "user.h"
+#include <lslunitsync/unitsync.h>
+#include <lsl/user/user.h>
 #include "uiutils.h"
 #include "utils/controls.h"
 #include "utils/customdialogs.h"

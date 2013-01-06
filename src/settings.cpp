@@ -32,12 +32,15 @@
 #include "utils/conversion.h"
 #include "utils/debug.h"
 #include <lslutils/misc.h>
+#include <lslunitsync/unitsync.h>
+#include <lslunitsync/c_api.h>
+#include <lslunitsync/data.h>
+
 #include "utils/platform.h"
 #include "uiutils.h"
 #include "battlelist/battlelistfiltervalues.h"
 #include "playback/playbackfiltervalues.h"
 #include "globalsmanager.h"
-#include "springunitsynclib.h"
 #include "customlistctrl.h"
 #include "springsettings/presets.h"
 #include "Helper/sortutil.h"
@@ -786,18 +789,24 @@ void Settings::RefreshSpringVersionList()
 	wxLogDebugFunc( _T( "" ) );
 	wxArrayString list = GetGroupList( _T( "/Spring/Paths" ) );
 	int count = list.GetCount();
-	std::map<wxString, wxString> usync_paths;
+	std::map<std::string, std::string> usync_paths;
 	for ( int i = 0; i < count; i++ )
 	{
-		wxString groupname = list[i];
-		usync_paths[groupname] = GetUnitSync( groupname );
+		std::string groupname = STD_STRING(list[i]);
+		usync_paths[groupname] = STD_STRING(GetUnitSync( TowxString(groupname) ));
 	}
 	if ( sett().GetSearchSpringOnlyInSLPath() || sett().GetUseSpringPathFromBundle() )
 	{
 		usync_paths.clear();
-		usync_paths[sett().GetCurrentUsedSpringIndex()] = sett().GetCurrentUsedUnitSync();
+		usync_paths[STD_STRING(sett().GetCurrentUsedSpringIndex())] = STD_STRING(sett().GetCurrentUsedUnitSync());
 	}
-	m_spring_versions = susynclib().GetSpringVersionList( usync_paths );
+	std::map<std::string, std::string> versionlist = LSL::susynclib().GetSpringVersionList( usync_paths );
+	std::map<std::string, std::string>::iterator it;
+
+	for(it = versionlist.begin(); it!=versionlist.end(); ++it) {
+		m_spring_versions[TowxString(it->first)] = TowxString(it->second);
+	}
+	versionlist.clear();
 }
 
 wxString Settings::GetCurrentUsedSpringIndex()
@@ -862,10 +871,13 @@ void Settings::SetUseSpringPathFromBundle( bool value )
 wxString Settings::GetCurrentUsedDataDir()
 {
 	wxString dir;
-	if ( susynclib().IsLoaded() )
+	if ( LSL::susynclib().IsLoaded() )
 	{
-		if ( susynclib().VersionSupports( SpringUnitSync::USYNC_GetDataDir ) ) dir = susynclib().GetSpringDataDir();
-		else dir = susynclib().GetSpringConfigString( _T( "SpringData" ), _T( "" ) );
+		if ( LSL::susynclib().VersionSupports( LSL::USYNC_GetDataDir ) ) {
+			dir = TowxString(LSL::susynclib().GetSpringDataDir());
+		} else {
+			dir = TowxString(LSL::susynclib().GetSpringConfigString( "SpringData" , "" ));
+		}
 	}
 #ifdef __WXMSW__
 	if ( dir.IsEmpty() )
@@ -915,9 +927,9 @@ wxString Settings::GetCurrentUsedSpringConfigFilePath()
 	wxString path;
 	try
 	{
-		path = susynclib().GetConfigFilePath();
+		path = WX_STRINGC(LSL::susynclib().GetConfigFilePath().c_str());
 	}
-	catch ( unitsync_assert ) {}
+	catch ( LSL::unitsync_assert ) {}
 	return path;
 }
 

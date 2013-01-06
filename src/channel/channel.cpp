@@ -6,7 +6,7 @@
 #include "channel.h"
 #include "../ui.h"
 #include "../server.h"
-#include "../user.h"
+#include <lsl/user/user.h>
 #include "../utils/tasutil.h"
 #include "../utils/debug.h"
 #include "../updater/updatehelper.h"

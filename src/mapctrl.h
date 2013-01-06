@@ -4,8 +4,8 @@
 #include <wx/image.h>
 #include <wx/string.h>
 
-#include "ibattle.h"
-#include "springunitsync.h"
+#include <lsl/battle/ibattle.h>
+#include <lslunitsync/unitsync.h>
 
 class wxPanel;
 class wxBitmap;
@@ -62,10 +62,10 @@ class MapCtrl : public wxPanel
 
 
   public:
-    MapCtrl( wxWindow* parent, int size, IBattle* battle, bool readonly, bool fixed_size, bool draw_start_types, bool singleplayer );
+    MapCtrl( wxWindow* parent, int size, LSL::Battle::IBattle* battle, bool readonly, bool fixed_size, bool draw_start_types, bool singleplayer );
     ~MapCtrl();
 
-    void SetBattle( IBattle* battle );
+    void SetBattle( LSL::Battle::IBattle* battle );
 
     void UpdateMinimap();
 
@@ -114,16 +114,16 @@ class MapCtrl : public wxPanel
     /** Get the relative (range: [0.0,1.0]) x- and y- coordinates of
      * the user's start position.
      */
-    wxRealPoint GetUserMapPositionAsReal(const User& user) const;
+    wxRealPoint GetUserMapPositionAsReal(const LSL::User& user) const;
 
     /** Get an absolute (relative to the client's [*this* MapCtrl
      * widget's] drawable area) user map position.
      *
      * The returned point is as would be used with wxDC methods.
      */
-    wxPoint GetTranslatedScaledUserMapPosition(const User& user) const;
+    wxPoint GetTranslatedScaledUserMapPosition(const LSL::User& user) const;
 
-    wxRect GetUserRect( const User& user, bool selected );
+    wxRect GetUserRect( const LSL::User& user, bool selected );
 	RectangleArea GetUserRectArea( const wxRect& userrect, int x, int y ) const;
 
 	wxRect GetUserSideRect() const { return wxRect( 37, 20, 16, 16 ); }
@@ -145,7 +145,7 @@ class MapCtrl : public wxPanel
 
     void GetClosestStartPos( int fromx, int fromy, int& index, int& x, int& y, int& range );
 
-    void DrawUser( wxDC& dc, User& user, bool selected, bool moving );
+    void DrawUser( wxDC& dc, LSL::User& user, bool selected, bool moving );
     void DrawUserPositions( wxDC& dc );
     void DrawBackground( wxDC& dc );
     void DrawStartRects( wxDC& dc );

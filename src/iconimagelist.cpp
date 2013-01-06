@@ -10,11 +10,12 @@
 #include <wx/dc.h>
 #include <wx/icon.h>
 
+#include <lsl/battle/battle.h>
+#include <lslunitsync/unitsync.h>
+
 #include "iconimagelist.h"
-#include "user.h"
-#include "battle.h"
-//#include "utils.h"
-#include "springunitsync.h"
+#include <lsl/user/user.h>
+#include "utils/conversion.h"
 
 #include "images/bot.xpm"
 #include "images/bot_broom.png.h"
@@ -285,8 +286,7 @@ int IconImageList::GetFlagIcon( const wxString& flagname )const
     return ICON_FLAGS_BASE + GetFlagIndex( flagname );
 }
 
-
-int IconImageList::GetBattleStatusIcon( const IBattle& battle ) const
+int IconImageList::GetBattleStatusIcon( const LSL::Battle::IBattle& battle ) const
 {
     unsigned idx = battle.GetInGame() << 3 | battle.IsLocked() << 2 | battle.IsFull() << 1 | battle.IsPassworded() << 0;
     static const int icons[16] = {
@@ -311,7 +311,7 @@ int IconImageList::GetBattleStatusIcon( const IBattle& battle ) const
     // return ICON_GAME_UNKNOWN;
 }
 
-wxString IconImageList::GetBattleStatus( const IBattle& battle ) const
+wxString IconImageList::GetBattleStatus( const LSL::Battle::IBattle& battle ) const
 {
     unsigned idx = battle.GetInGame() << 3 | battle.IsLocked() << 2 | battle.IsFull() << 1 | battle.IsPassworded() << 0;
     static const wxString states[16] = {
@@ -366,14 +366,14 @@ void IconImageList::SetColourIcon( const wxColour& colour )
 
 int IconImageList::GetSideIcon( const wxString& modname, int side )
 {
-	wxArrayString sides = usync().GetSides( modname );
+	wxArrayString sides = LSL::usync().GetSides( STD_STRING(modname) );
 	wxString sidename;
 	if( side < (int)sides.GetCount() ) sidename = sides[side];
   wxString cachestring = modname + _T("_") + sidename;
   if (m_cached_side_icons.find(cachestring)  == m_cached_side_icons.end()){
     try
     {
-      int IconPosition = Add(wxBitmap( usync().GetSidePicture( modname , sidename ) ), wxNullBitmap);
+      int IconPosition = Add(wxBitmap( LSL::usync().GetSidePicture( STD_STRING(modname) , STD_STRING(sidename) ) ), wxNullBitmap);
       m_cached_side_icons[cachestring] = IconPosition;
       return IconPosition;
     } catch (...)

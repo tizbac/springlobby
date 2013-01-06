@@ -5,9 +5,9 @@
 #include <wx/intl.h>
 #include <wx/menu.h>
 
-#include "user.h"
+#include <lsl/user/user.h>
 #include "iconimagelist.h"
-#include "battle.h"
+#include <lsl/battle/battle.h>
 #include "uiutils.h"
 #include "ui.h"
 #include "server.h"

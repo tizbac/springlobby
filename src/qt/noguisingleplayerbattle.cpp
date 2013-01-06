@@ -2,7 +2,7 @@
 
 #include "settings.h"
 #include "spring.h"
-#include "springunitsynclib.h"
+#include <lslunitsync/unitsync.h>
 
 /** @brief StartSpring
   *

@@ -1,8 +1,8 @@
 #ifndef SPRINGLOBBY_HEADERGUARD_SINGLEPLAYERBATTLE_H
 #define SPRINGLOBBY_HEADERGUARD_SINGLEPLAYERBATTLE_H
 
-#include "ibattle.h"
-#include "user.h"
+#include <lsl/battle/ibattle.h>
+#include <lsl/user/user.h>
 
 class Ui;
 class BattleBot;

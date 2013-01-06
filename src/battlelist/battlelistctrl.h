@@ -2,7 +2,7 @@
 #define SPRINGLOBBY_HEADERGUARD_BATTLELISTCTRL_H
 
 #include "battlelistfilter.h"
-#include "battlelist.h"
+#include <lsl/container/battlelist.h>
 
 #include "customvirtlistctrl.h"
 
