@@ -86,12 +86,12 @@ BattleroomMMOptionsTab<BattleType>::BattleroomMMOptionsTab(  BattleType* battle,
 
 	m_mod_options_sizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Game Options") ), wxVERTICAL );
 	m_mod_layout = new wxBoxSizer( wxVERTICAL);
-	setupOptionsSizer(m_mod_layout,OptionsWrapper::ModOption);
+	setupOptionsSizer(m_mod_layout,LSL::OptionsWrapper::ModOption);
 	m_mod_options_sizer->Add( m_mod_layout, 1, wxEXPAND, 5 );
 
 	m_map_options_sizer = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Map Options") ), wxVERTICAL );
 	m_map_layout = new wxBoxSizer( wxVERTICAL);
-	setupOptionsSizer(m_map_layout,OptionsWrapper::MapOption);
+	setupOptionsSizer(m_map_layout,LSL::OptionsWrapper::MapOption);
 	m_map_options_sizer->Add( m_map_layout, 1, wxEXPAND, 5 );
 
 
@@ -119,7 +119,7 @@ BattleroomMMOptionsTab<BattleType>::~BattleroomMMOptionsTab()
 }
 
 template < class BattleType >
-void BattleroomMMOptionsTab<BattleType>::setupOptionsSizer( wxBoxSizer* parent_sizer, OptionsWrapper::GameOption optFlag )
+void BattleroomMMOptionsTab<BattleType>::setupOptionsSizer( wxBoxSizer* parent_sizer, LSL::OptionsWrapper::GameOption optFlag )
 {
 		if ( !m_battle ) return;
     const SpringUnitSync::OptionMapSection& sections = m_battle->CustomBattleOptions().m_opts[optFlag].section_map;
@@ -168,7 +168,7 @@ wxButton* BattleroomMMOptionsTab<BattleType>::getButton( const wxWindowID id, co
 
 template < class BattleType >
 int BattleroomMMOptionsTab<BattleType>::setupOptionsSectionSizer(const mmOptionSection& section,
-    wxBoxSizer* parent_sizer, OptionsWrapper::GameOption optFlag)
+    wxBoxSizer* parent_sizer, LSL::OptionsWrapper::GameOption optFlag)
 {
 	if ( !m_battle ) return -1;
     const int col_gap = 35;

@@ -43,7 +43,7 @@ class BattleroomMMOptionsTab : public wxScrolledWindow
 
 		void UpdateOptControls(wxString controlName);
 		//!relaod single category
-		void OnReloadControls(OptionsWrapper::GameOption flag);
+		void OnReloadControls(LSL::OptionsWrapper::GameOption flag);
 		//!reload all categories
 		void OnReloadControls();
 
@@ -107,7 +107,7 @@ class BattleroomMMOptionsTab : public wxScrolledWindow
 
 		/** \brief setup toplevel sizer per GameOption with all child sizers ( sections )
             */
-		void setupOptionsSizer( wxBoxSizer* parent_sizer, OptionsWrapper::GameOption optFlag );
+		void setupOptionsSizer( wxBoxSizer* parent_sizer, LSL::OptionsWrapper::GameOption optFlag );
 
 
         /** \brief generate Gui elements from loaded MMoptions
@@ -115,7 +115,7 @@ class BattleroomMMOptionsTab : public wxScrolledWindow
          * set the controls name to the option key and add it to the appropiate map and sizer.
          * \return the total num of controls in the sizer
          */
-		int setupOptionsSectionSizer(const mmOptionSection& section, wxBoxSizer* parent_sizer, OptionsWrapper::GameOption optFlag);
+		int setupOptionsSectionSizer(const LSL::mmOptionSection& section, wxBoxSizer* parent_sizer, LSL::OptionsWrapper::GameOption optFlag);
 
 		/** \name Event handlers
 		 * @{
