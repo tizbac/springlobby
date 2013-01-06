@@ -44,3 +44,4 @@ macro(mylink var)
 		link_directories( ${lib} )
 	endforeach()
 endmacro(mylink)
+

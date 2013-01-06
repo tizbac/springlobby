@@ -3,9 +3,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 INCLUDE(compat_flags)
 ADD_DEFINITIONS(-DHAVE_SPRINGLOBBY=1)
 
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lsl/CMakeLists.txt")
-	MESSAGE(FATAL_ERROR "lsl/CMakeLists.txt doesn't exist, please run \ngit submodule update --init")
-endif()
 
 # Add Definitions, Compiler-Switches, etc.: -Wall -O2 -g3 ...
 # MSVC compiler (cl.exe) does not accept the same switches as gcc, although preprocessor definitions in the -D form will work for both
@@ -25,16 +22,10 @@ if( ${CMAKE_CROSSCOMPILING} )
 	set(Boost_USE_STATIC_RUNTIME    ON)
 endif()
 
-FIND_PACKAGE(Boost 1.44.0 COMPONENTS thread system REQUIRED)
+FIND_PACKAGE(Boost 1.42.0 COMPONENTS thread system REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 add_to_global(link_directories ${Boost_LIBRARY_DIRS} ${BOOST_LIB_DIR})
 
-#----------------------------------------------------------------------------------------------------
-# L10n support
-#----------------------------------------------------------------------------------------------------
-if( OPTION_TRANSLATION_SUPPORT )
-	include ( ${CMAKE_SOURCE_DIR}/po/CMakeLists.txt )
-endif( OPTION_TRANSLATION_SUPPORT )
 ADD_DEFINITIONS( -DLOCALE_INSTALL_DIR="${LOCALE_INSTALL_DIR}" )
 
 
@@ -203,6 +194,7 @@ add_sources(SLSharedWithSettings
 
 FILE( GLOB header "*.h" )
 FILE( GLOB header2 "*/*.h" )
+# FILE( GLOB header3 "*/*/*.h" )
 
 #grep -lR cpp\"$ * | sed -e "s/\.h/\.cpp/g"
 clear( templatesources)
@@ -239,13 +231,16 @@ add_subdirectory(widgets)
 add_subdirectory(wxkeybinder)
 
 set(LSLSERVER OFF CACHE BOOL "disable lsl-server build" FORCE)
-Add_Subdirectory(lsl)
-INCLUDE_DIRECTORIES(lsl/src)
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lsl/CMakeLists.txt")
+	MESSAGE(FATAL_ERROR "lsl/CMakeLists.txt doesn't exist, please run \ngit submodule update --init")
+else()
+	Add_Subdirectory(lsl)
+	INCLUDE_DIRECTORIES(lsl/src)
+endif()
 add_subdirectory(springsettings)
 
 
-LIST( APPEND header ${header2} ${templatesources} )
-set_source_files_properties(  ${header} PROPERTIES HEADER_FILE_ONLY 1 )
+set_source_files_properties(  ${templatesources} PROPERTIES HEADER_FILE_ONLY 1 )
 
 mylink( ${EXTRA_LIB_DIRS} ${link_directories} ) 
 
@@ -282,3 +277,4 @@ IF(UNIX)
 ENDIF(UNIX)
 
 
+add_subdirectory(tests)

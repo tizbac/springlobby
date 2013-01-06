@@ -32,18 +32,28 @@ endif(NOT DEFINED SPRINGLOBBY_REV)
 FIND_PACKAGE( PkgConfig )
 
 #if nothing went wrong we have the file and can define HAVE_CONFIG_H
-IF ( EXISTS ${springlobby_BINARY_DIR}/springlobby_config.h  OR  EXISTS ${springlobby_SOURCE_DIR}/springlobby_config.h  )
+IF ( EXISTS ${springlobby_BINARY_DIR}/springlobby_config.h)
     ADD_DEFINITIONS( -DHAVE_CONFIG_H )
     INCLUDE_DIRECTORIES(${springlobby_BINARY_DIR})
-ENDIF ( EXISTS ${springlobby_BINARY_DIR}/springlobby_config.h  OR  EXISTS ${springlobby_SOURCE_DIR}/springlobby_config.h  )
+ELSEIF ( EXISTS ${springlobby_SOURCE_DIR}/springlobby_config.h  )
+    ADD_DEFINITIONS( -DHAVE_CONFIG_H )
+    INCLUDE_DIRECTORIES(${springlobby_SOURCE_DIR})
+ENDIF ()
+
 
 
 #----------------------------------------------------------------------------------------------------
 # Options, that can be changed be the User in order to customise springlobby
 #----------------------------------------------------------------------------------------------------
-SET( OPTION_SOUND
-	TRUE CACHE BOOL
-	"Enables sound notification functionality (requires openAL libraries)" )
+if(WIN32) #FIXME: remove this when static compiled alure is fixed
+	SET( OPTION_SOUND
+		FALSE CACHE BOOL
+		"sound disabled because of an alure bug" FORCE )
+else(WIN32)
+	SET( OPTION_SOUND
+		TRUE CACHE BOOL
+		"Enables sound notification functionality (requires openAL libraries)" )
+endif(WIN32)
 SET( OPTION_TRANSLATION_SUPPORT
 	TRUE CACHE BOOL
 	"Enables translation support to the programs and adds facilities for helping translators (requires GNU Gettext)" )
@@ -73,6 +83,12 @@ INCLUDE(SpringLobbyMacros)
 clear(link_directories)
 clear(springlobbySrc)
 Add_Subdirectory(doc)
+#----------------------------------------------------------------------------------------------------
+# L10n support
+#----------------------------------------------------------------------------------------------------
+if( OPTION_TRANSLATION_SUPPORT )
+        add_subdirectory(po)
+endif( OPTION_TRANSLATION_SUPPORT )
 Add_Subdirectory(src)
 
 #cppcheck stuff

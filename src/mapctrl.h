@@ -3,6 +3,7 @@
 
 #include <wx/image.h>
 #include <wx/string.h>
+#include <wx/panel.h>
 
 #include <lsl/battle/ibattle.h>
 #include <lslunitsync/unitsync.h>
