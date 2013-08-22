@@ -86,8 +86,8 @@ void* SearchThread::Entry()
   wxHTTP get;
   get.SetTimeout(10);
   get.Connect(_("api.springfiles.com"));
-  const wxString query = wxFormat("/json.php?nosensitive=on&logical=or&springname=%s&tag=%s")  % m_search_query % m_search_query;
-  wxInputStream * httpStream = get.GetInputStream(wxString(query,wxMBConvUTF8()));
+  const wxString query = wxFormat(_("/json.php?nosensitive=on&logical=or&springname=%s&tag=%s"))  % m_search_query % m_search_query;
+  wxInputStream * httpStream = get.GetInputStream(wxString(query));
   wxString res;
   if ( get.GetError() == wxPROTO_NOERR )
   {
@@ -131,6 +131,7 @@ ContentDownloadDialog::ContentDownloadDialog(wxWindow* parent, wxWindowID id, co
   SetSizer( m_main_sizer );
   Layout();
   m_searchbutton->SetDefault();
+  m_searchbox->SetFocus();
   
 }
 

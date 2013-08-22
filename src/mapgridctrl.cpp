@@ -216,9 +216,27 @@ void MapGridCtrl::Clear()
 }
 
 
+bool MapGridCtrl::IsInGrid( const std::string& mapname) {
+	for(auto gridentry: m_grid) {
+		if (gridentry->name == mapname) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void MapGridCtrl::AddMap( const wxString& mapname )
 {
+	assert(wxThread::IsMain());
 	assert(!mapname.empty());
+
+	const std::string _mapname(mapname.mb_str());
+	if(!LSL::usync().MapExists(_mapname)) {
+		//FIXME: offer download button on image instead?
+		wxLogError(_("Map %s doesn't exist!"), mapname.wc_str());
+		return;
+	}
+
 	// no duplicates (would crash because of dangling MapData pointers in m_grid)
 	if ( m_maps.find(mapname) == m_maps.end() ) {
 		MapData m;
@@ -228,6 +246,12 @@ void MapGridCtrl::AddMap( const wxString& mapname )
 		m_pending_mapimages.push_back(&m_maps[mapname]);
 		UpdateAsyncFetches();
 	}
+
+	if (IsInGrid(_mapname)) {
+		wxLogError(_("Map %s already in grid!"), mapname.wc_str());
+		return;
+	}
+
 	m_grid.push_back( &m_maps[mapname] );
 	UpdateGridSize();
 }
@@ -266,20 +290,37 @@ void MapGridCtrl::CheckInBounds()
 		m_pos.y = std::max( -1, std::min( size * m_size.y - height, m_pos.y ) );
 }
 
+MapGridCtrl::MapData* MapGridCtrl::GetMaxPriorityMap(std::list<MapData*>& maps)
+{
+	assert(!maps.empty());
+	unsigned max=0;
+	std::list<MapData*>::iterator it;
+	std::list<MapData*>::iterator maxpos = maps.begin();
+	for ( it=maps.begin(); it!=maps.end(); ++it){
+		if ((*it)->priority > max) {
+			max = (*it)->priority;
+			maxpos = it;
+		}
+	}
+	MapData* ret = *maxpos;
+	maps.erase(maxpos);
+	return ret;
+}
 
 void MapGridCtrl::UpdateAsyncFetches()
 {
+	if (m_async_ops_count>2)
+		return;
 	if (!m_pending_mapinfos.empty()) {
 		m_async_ops_count++;
-		MapData* m = m_pending_mapinfos.front();
-		m_pending_mapinfos.pop_front();
+		const MapData* m = GetMaxPriorityMap(m_pending_mapinfos);
 		m_async_ex.GetMapEx(m->name);
 	} else if ( !m_pending_mapimages.empty() ) {
-		m_async_ops_count++;
-		MapData* m = m_pending_mapimages.front();
-		m_pending_mapimages.pop_front();
+		MapData* m = GetMaxPriorityMap(m_pending_mapimages);
 		if (m->state != MapState_NoMinimap) //FIXME: this shouldn never happen
 			return;
+		m_async_ops_count++;
+
 		m->state = MapState_GetMinimap;
 		m_async_image.GetMinimap( m->name, MINIMAP_SIZE, MINIMAP_SIZE );
 	} else {
@@ -294,8 +335,8 @@ void MapGridCtrl::DrawMap( wxDC& dc, MapData& map, int x, int y )
 {
 	switch ( map.state ) {
 		case MapState_NoMinimap:
+			map.priority=1;
 			UpdateAsyncFetches();
-			//FetchMinimap( map );
 			// fall through, both when starting fetch and when waiting
 			// for it to finish, we want to show temporary image
 		case MapState_GetMinimap:
@@ -475,6 +516,8 @@ void MapGridCtrl::OnGetMapImageAsyncCompleted( const std::string& _mapname )
 	// set the minimap in all MapMaps
 	m_maps[mapname].minimap = wxBitmap (minimap);
 	m_maps[mapname].state = MapState_GotMinimap;
+	if (m_async_ops_count>0) //WTF, why is this needed?
+		m_async_ops_count--;
 
 	// never ever call a gui function here, it will crash! (in 1/100 cases)
 	wxCommandEvent evt( REFRESH_EVENT, GetId() );
@@ -491,6 +534,7 @@ void MapGridCtrl::OnGetMapExAsyncCompleted( const std::string& _mapname )
 	LSL::UnitsyncMap m = LSL::usync().GetMapEx(_mapname);
 	m_maps[mapname].hash = m.hash;
 	m_maps[mapname].info = m.info;
+	m_async_ops_count--;
 
 }
 

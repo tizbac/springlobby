@@ -39,6 +39,7 @@ BEGIN_EVENT_TABLE( MainOptionsTab, wxPanel )
 
 	EVT_BUTTON ( wxID_APPLY,    MainOptionsTab::OnApply     )
 	EVT_BUTTON ( wxID_REVERT,   MainOptionsTab::OnRestore   )
+	EVT_BUTTON ( wxID_OK,   MainOptionsTab::OnOk   )
 
 END_EVENT_TABLE()
 
@@ -50,6 +51,7 @@ END_EVENT_TABLE()
 MainOptionsTab::MainOptionsTab( wxWindow* parent )
     : wxScrolledWindow( parent, -1 )
 {
+	frame = parent;
     GetAui().manager->AddPane( this, wxLEFT, _T("mainoptionstab") );
     m_tabs = new SLNotebook( this, _T("mainoptionstab"), OPTIONS_TABS, wxDefaultPosition, wxDefaultSize, wxAUI_NB_TAB_SPLIT | wxAUI_NB_TAB_MOVE | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_TOP | wxAUI_NB_TAB_EXTERNAL_MOVE );
     m_tabs->SetArtProvider(new SLArtProvider);
@@ -75,15 +77,15 @@ MainOptionsTab::MainOptionsTab( wxWindow* parent )
 	m_groups_opts = new GroupOptionsPanel( m_tabs );
 	m_tabs->AddPage ( m_groups_opts, _( "Groups" ), true, wxIcon( userchat_xpm ) );
 
-	m_ok_btn = new wxButton( this, wxID_OK, _( "Ok" ) );
-	m_cancel_btn = new wxButton( this, wxID_CANCEL, _( "Cancel" ) );
 	m_apply_btn = new wxButton( this, wxID_APPLY, _( "Apply" ) );
+	m_cancel_btn = new wxButton( this, wxID_CANCEL, _( "Cancel" ) );
+	m_ok_btn = new wxButton( this, wxID_OK, _( "Ok" ) );
 
 	m_button_sizer = new wxBoxSizer( wxHORIZONTAL );
 	m_button_sizer->AddStretchSpacer();
-	m_button_sizer->Add( m_ok_btn, 0, wxALL, 2 );
-	m_button_sizer->Add( m_cancel_btn, 0, wxALL, 2 );
 	m_button_sizer->Add( m_apply_btn, 0, wxALL, 2 );
+	m_button_sizer->Add( m_cancel_btn, 0, wxALL, 2 );
+	m_button_sizer->Add( m_ok_btn, 0, wxALL, 2 );
 
 	m_main_sizer = new wxBoxSizer( wxVERTICAL );
 	m_main_sizer->Add( m_tabs, 1, wxEXPAND );
@@ -119,13 +121,19 @@ void MainOptionsTab::OnApply( wxCommandEvent& event )
 	sett().SaveSettings();
 }
 
+void MainOptionsTab::OnOk( wxCommandEvent& event )
+{
+	OnApply(event);
+	frame->Close();
+}
+
 void MainOptionsTab::OnRestore( wxCommandEvent& event )
 {
 	m_spring_opts->OnRestore( event );
 	m_chat_opts->OnRestore( event );
 	m_torrent_opts->OnRestore( event );
-
 	m_lobby_opts->OnRestore ( event );
+	frame->Close();
 }
 
 void MainOptionsTab::OnOpenGroupsTab()
